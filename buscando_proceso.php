@@ -56,43 +56,56 @@ if (empty($_SESSION['nombre'])) {
                 </div>
                 <div class="col-md-8">
                     <?php
+                    $rol = $_POST['rol'];
+                    $dato = $_POST['dato'];
+                    $buscar = $_POST['buscar'];
+
+
                     try {
-
-                        $conexion = new PDO("mysql:host=localhost; dbname=campus", "root", "");
-                        $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                        $conexion->exec("SET CHARACTER SET UTF8");
-
-                        $sql = "SELECT * FROM profesor";
-                        $consulta = $conexion->prepare($sql);
-                        $consulta->execute();
-
-                        echo "<table class = 'table table-striped'>";
-                        echo "<tr>";
-                        echo "<td><strong>DNI</strong></td>";
-                        echo "<td><strong>NOMBRE</strong></td>";
-                        echo "<td><strong>APELLIDO</strong></td>";
-                        echo "<td><strong>CORREO</strong></td>";
-                        echo "<td><strong>ID_PROFESOR</strong></td>";
-                        echo "<td>";
-                        echo "</td>";
-                        echo "</tr>";
-                        while ($fila = $consulta->fetch(PDO::FETCH_ASSOC)) {
-
-                            echo "<tr>";
-                            echo "<td>" . $fila['dni'] . "</td>";
-                            echo "<td>" . $fila['nombre'] . "</td>";
-                            echo "<td>" . $fila['apellido'] . "</td>";
-                            echo "<td>" . $fila['correo'] . "</td>";
-                            echo "<td>" . $fila['id_profesor'] . "</td>";
-                            echo "<td><a href='eliminar_profesor.php?eliminar=".$fila['dni']."'><span class='glyphicon glyphicon-trash'></span></a></td>";
-                            echo "</tr>";
-                        }
-
-                        echo "</table>";
+                        $conexion = new PDO("mysql:host=localhost;dbname=campus", "root", "");
                     } catch (Exception $ex) {
                         echo $ex->getMessage();
                         echo $ex->getLine();
                     }
+
+                    if ($rol == 'alumno') {
+                        if ($dato == 'dni') {
+                            $sql = "SELECT * FROM alumnos WHERE $dato LIKE '%$buscar%'";
+                        } else {
+                            $sql = "SELECT * FROM alumnos WHERE $dato LIKE '%$buscar%'";
+                        }
+                        $consulta = $conexion->prepare($sql);
+                        $consulta->execute();
+                    }
+                    if ($rol == 'profesor') {
+                        if ($dato == 'dni') {
+                            $sql = "SELECT * FROM profesor WHERE $dato LIKE '%$buscar%'";
+                        } else {
+                            $sql = "SELECT * FROM profesor WHERE $dato LIKE '%$buscar%'";
+                        }
+                        $consulta = $conexion->prepare($sql);
+                        $consulta->execute();
+                    }
+
+
+                    echo "<table class = 'table table-striped'>";
+                    echo "<tr>";
+                    echo "<td><strong>DNI</strong></td>";
+                    echo "<td><strong>NOMBRE</strong></td>";
+                    echo "<td><strong>APELLIDO</strong></td>";
+                    echo "<td><strong>CORREO</strong></td>";
+                    echo "</tr>";
+                    while ($resultado = $consulta->fetch(PDO::FETCH_ASSOC)) {
+
+                        echo "<tr>";
+                        echo "<td>" . $resultado['dni'] . "</td>";
+                        echo "<td>" . $resultado['nombre'] . "</td>";
+                        echo "<td>" . $resultado['apellido'] . "</td>";
+                        echo "<td>" . $resultado['correo'] . "</td>";
+                        echo "</tr>";
+                    }
+
+                    echo "</table>";
                     ?>
                 </div>
                 <div class="col-md-2">

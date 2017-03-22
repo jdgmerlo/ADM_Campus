@@ -62,33 +62,36 @@ if (empty($_SESSION['nombre'])) {
                         $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                         $conexion->exec("SET CHARACTER SET UTF8");
 
-                        $sql = "SELECT * FROM profesor";
+                        $sql = "SELECT * FROM alumnos";
                         $consulta = $conexion->prepare($sql);
                         $consulta->execute();
+                        $fila_alumno = $consulta->fetch(PDO::FETCH_ASSOC);
 
-                        echo "<table class = 'table table-striped'>";
-                        echo "<tr>";
-                        echo "<td><strong>DNI</strong></td>";
-                        echo "<td><strong>NOMBRE</strong></td>";
-                        echo "<td><strong>APELLIDO</strong></td>";
-                        echo "<td><strong>CORREO</strong></td>";
-                        echo "<td><strong>ID_PROFESOR</strong></td>";
-                        echo "<td>";
-                        echo "</td>";
-                        echo "</tr>";
-                        while ($fila = $consulta->fetch(PDO::FETCH_ASSOC)) {
+                        $sql2 = "SELECT * FROM profesor";
+                        $consulta2 = $conexion->prepare($sql2);
+                        $consulta2->execute();
+                        $fila_profesor = $consulta2->fetch(PDO::FETCH_ASSOC);
 
-                            echo "<tr>";
-                            echo "<td>" . $fila['dni'] . "</td>";
-                            echo "<td>" . $fila['nombre'] . "</td>";
-                            echo "<td>" . $fila['apellido'] . "</td>";
-                            echo "<td>" . $fila['correo'] . "</td>";
-                            echo "<td>" . $fila['id_profesor'] . "</td>";
-                            echo "<td><a href='eliminar_profesor.php?eliminar=".$fila['dni']."'><span class='glyphicon glyphicon-trash'></span></a></td>";
-                            echo "</tr>";
-                        }
+                        $row_alumno = $consulta->rowCount();
+                        $row_profesor = $consulta2->rowCount();
 
-                        echo "</table>";
+                        echo "<h2><span class='label label-default'>Alumnos</span></h2>";
+                        echo "<br />";
+                        echo "<br />";
+                        echo "<div class = 'progress'>";
+                        echo "<div class = 'progress-bar progress-bar-success progress-bar-striped' role = 'progressbar' aria-valuenow = '$row_alumno' aria-valuemin = '0' aria-valuemax = '700' style = 'width: $row_alumno%'>";
+                        echo "$row_alumno</h3>";
+                        echo "</div>";
+                        echo "</div>";
+                        echo "<br />";
+                        echo "<h2><span class='label label-default'>Profesores</span></h2>";
+                        echo "<br />";
+                        echo "<br />";
+                        echo "<div class = 'progress'>";
+                        echo " <div class = 'progress-bar progress-bar-info progress-bar-striped' role = 'progressbar' aria-valuenow = '$row_profesor' aria-valuemin = '0' aria-valuemax = '700' style = 'width: $row_profesor%'>";
+                        echo "$row_profesor</h3>";
+                        echo "</div>";
+                        echo "</div>";
                     } catch (Exception $ex) {
                         echo $ex->getMessage();
                         echo $ex->getLine();

@@ -55,47 +55,63 @@ if (empty($_SESSION['nombre'])) {
 
                 </div>
                 <div class="col-md-8">
-                    <?php
-                    try {
 
-                        $conexion = new PDO("mysql:host=localhost; dbname=campus", "root", "");
-                        $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                        $conexion->exec("SET CHARACTER SET UTF8");
+                    <hr />
+                    <br />
+                    <br />
 
-                        $sql = "SELECT * FROM profesor";
-                        $consulta = $conexion->prepare($sql);
-                        $consulta->execute();
+                    <br />
+                    <br />
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">NOTICIAS</div>
+                        <div class="panel-body">
 
-                        echo "<table class = 'table table-striped'>";
-                        echo "<tr>";
-                        echo "<td><strong>DNI</strong></td>";
-                        echo "<td><strong>NOMBRE</strong></td>";
-                        echo "<td><strong>APELLIDO</strong></td>";
-                        echo "<td><strong>CORREO</strong></td>";
-                        echo "<td><strong>ID_PROFESOR</strong></td>";
-                        echo "<td>";
-                        echo "</td>";
-                        echo "</tr>";
-                        while ($fila = $consulta->fetch(PDO::FETCH_ASSOC)) {
+                            <?php
+                            $carrera = $_POST['seleccionCarrera'];
 
-                            echo "<tr>";
-                            echo "<td>" . $fila['dni'] . "</td>";
-                            echo "<td>" . $fila['nombre'] . "</td>";
-                            echo "<td>" . $fila['apellido'] . "</td>";
-                            echo "<td>" . $fila['correo'] . "</td>";
-                            echo "<td>" . $fila['id_profesor'] . "</td>";
-                            echo "<td><a href='eliminar_profesor.php?eliminar=".$fila['dni']."'><span class='glyphicon glyphicon-trash'></span></a></td>";
-                            echo "</tr>";
-                        }
+                            $db_name = "root";
+                            $db_pass = "";
 
-                        echo "</table>";
-                    } catch (Exception $ex) {
-                        echo $ex->getMessage();
-                        echo $ex->getLine();
-                    }
-                    ?>
+                            try {
+
+                                $conexion = new PDO("mysql:host=localhost;dbname=campus", $db_name, $db_pass);
+                                $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                                $conexion->exec("SET CHARACTER SET UTF8");
+                            } catch (Exception $ex) {
+                                echo $ex->getMessage();
+                                echo $ex->getLine();
+                            }
+
+                            $query = "SELECT * FROM $carrera";
+                            $con = $conexion->prepare($query);
+                            $con->execute();
+
+
+
+                            while ($fila = $con->fetch(PDO::FETCH_ASSOC)) {
+
+                                if (!empty($fila['noticia'])) {
+                                    echo $fila['noticia'];
+                                }
+
+                                
+                                    $id = $fila['id_noticia'];
+                                    echo "<a href='eliminar_noticia.php?id=$id&carrera=$carrera'> &nbsp;&nbsp;&nbsp;&nbsp; Eliminar</a>";
+                             
+                                echo "<br />";
+                                echo "<hr />";
+                            }
+                            ?>
+                        </div>
+
+                    </div>
+                    <a href="nueva_noticia.php?carrera=<?php echo $carrera ?>"><h2><span class="label label-info">Nueva Noticia</span></h2></a>
+
+
                 </div>
                 <div class="col-md-2">
+
+
 
 
                 </div>

@@ -53,6 +53,16 @@ if (empty($_SESSION['nombre'])) {
                 echo "<h4><span class='bg-success'>Eliminado Con Éxito...</span></h4>";
             }
             ?>
+            <?php
+            if (isset($_GET['exito']) == 7) {
+                echo "<h4><span class='bg-success'>Modificado...</span></h4>";
+            }
+            ?>
+            <?php
+            if (isset($_GET['err']) == 3) {
+                echo "<h4><span class='bg-success'>La Contraseña Actual No Es La Correcta</span></h4>";
+            }
+            ?>
             <br />
             <br />
             <div class="row">
@@ -126,7 +136,7 @@ if (empty($_SESSION['nombre'])) {
                     }
                     ?>
                     <!--INGRESO PROFESOR-->
-                    <h3><span class="label label-info">Ingreso Alumno</span></h3>
+                    <h3><span class="label label-info">Ingreso Profesor</span></h3>
                     <div class="col-sm-4">
                         <form action="guardar_profesor.php" method="post">
 

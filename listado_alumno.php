@@ -86,7 +86,7 @@ if (empty($_SESSION['nombre'])) {
                             echo "<td>" . $fila['legajo'] . "</td>";
                             echo "<td>" . $fila['correo'] . "</td>";
                             echo "<td>" . $fila['id_carrera'] . "</td>";
-                            echo "<td><a href='eliminar_alumno.php?eliminar=".$fila['dni']."'>Eliminar</a></td>";
+                            echo "<td><a href='eliminar_alumno.php?eliminar=".$fila['dni']."'><span class='glyphicon glyphicon-trash'></span></a></td>";
                             echo "</tr>";
                         }
 

@@ -55,47 +55,26 @@ if (empty($_SESSION['nombre'])) {
 
                 </div>
                 <div class="col-md-8">
-                    <?php
-                    try {
 
-                        $conexion = new PDO("mysql:host=localhost; dbname=campus", "root", "");
-                        $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                        $conexion->exec("SET CHARACTER SET UTF8");
+                    <form action="noticias2.php" method="post">
+                        <br />
+                        <p class="help-block">Seleccionar Carrera.</p>
+                        <select class="form-control" name="seleccionCarrera">
+                            <option value="Ambientales">Ambientales</option>
+                            <option value="Clinicos">Clinicos</option>
+                            <option value="Contables">Contable</option>
+                            <option value="Sistemas">Sistemas</option>
+                        </select>
 
-                        $sql = "SELECT * FROM profesor";
-                        $consulta = $conexion->prepare($sql);
-                        $consulta->execute();
+                        <br />
+                        <button type="submit" class="btn btn-default">Mostrar</button>
+                    </form>
 
-                        echo "<table class = 'table table-striped'>";
-                        echo "<tr>";
-                        echo "<td><strong>DNI</strong></td>";
-                        echo "<td><strong>NOMBRE</strong></td>";
-                        echo "<td><strong>APELLIDO</strong></td>";
-                        echo "<td><strong>CORREO</strong></td>";
-                        echo "<td><strong>ID_PROFESOR</strong></td>";
-                        echo "<td>";
-                        echo "</td>";
-                        echo "</tr>";
-                        while ($fila = $consulta->fetch(PDO::FETCH_ASSOC)) {
 
-                            echo "<tr>";
-                            echo "<td>" . $fila['dni'] . "</td>";
-                            echo "<td>" . $fila['nombre'] . "</td>";
-                            echo "<td>" . $fila['apellido'] . "</td>";
-                            echo "<td>" . $fila['correo'] . "</td>";
-                            echo "<td>" . $fila['id_profesor'] . "</td>";
-                            echo "<td><a href='eliminar_profesor.php?eliminar=".$fila['dni']."'><span class='glyphicon glyphicon-trash'></span></a></td>";
-                            echo "</tr>";
-                        }
-
-                        echo "</table>";
-                    } catch (Exception $ex) {
-                        echo $ex->getMessage();
-                        echo $ex->getLine();
-                    }
-                    ?>
                 </div>
                 <div class="col-md-2">
+
+
 
 
                 </div>

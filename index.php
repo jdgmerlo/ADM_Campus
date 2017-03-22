@@ -76,11 +76,11 @@
                                 </div>
                             </div>
                         </form>
-<?php
-if (isset($_GET['error']) == 1) {
-    echo "Contraseña Incorrecta";
-}
-?>
+                        <?php
+                        if (isset($_GET['error']) == 1) {
+                            echo "Contraseña Incorrecta";
+                        }
+                        ?>
 
                     </div>
 

@@ -55,47 +55,29 @@ if (empty($_SESSION['nombre'])) {
 
                 </div>
                 <div class="col-md-8">
-                    <?php
-                    try {
 
-                        $conexion = new PDO("mysql:host=localhost; dbname=campus", "root", "");
-                        $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                        $conexion->exec("SET CHARACTER SET UTF8");
-
-                        $sql = "SELECT * FROM profesor";
-                        $consulta = $conexion->prepare($sql);
-                        $consulta->execute();
-
-                        echo "<table class = 'table table-striped'>";
-                        echo "<tr>";
-                        echo "<td><strong>DNI</strong></td>";
-                        echo "<td><strong>NOMBRE</strong></td>";
-                        echo "<td><strong>APELLIDO</strong></td>";
-                        echo "<td><strong>CORREO</strong></td>";
-                        echo "<td><strong>ID_PROFESOR</strong></td>";
-                        echo "<td>";
-                        echo "</td>";
-                        echo "</tr>";
-                        while ($fila = $consulta->fetch(PDO::FETCH_ASSOC)) {
-
-                            echo "<tr>";
-                            echo "<td>" . $fila['dni'] . "</td>";
-                            echo "<td>" . $fila['nombre'] . "</td>";
-                            echo "<td>" . $fila['apellido'] . "</td>";
-                            echo "<td>" . $fila['correo'] . "</td>";
-                            echo "<td>" . $fila['id_profesor'] . "</td>";
-                            echo "<td><a href='eliminar_profesor.php?eliminar=".$fila['dni']."'><span class='glyphicon glyphicon-trash'></span></a></td>";
-                            echo "</tr>";
-                        }
-
-                        echo "</table>";
-                    } catch (Exception $ex) {
-                        echo $ex->getMessage();
-                        echo $ex->getLine();
-                    }
-                    ?>
+                    <h3><span class="label label-info">Modificar Datos</span></h3>
+                    <div class="col-sm-4">
+                        <form action="cambios_proceso.php" method="post">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Usuario</label>
+                                <input type="text" class="form-control" name="usuario" id="exampleInputEmail1" required="required" value="<?php echo $_SESSION['nombre'] ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Contraseña</label>
+                                <input type="password" class="form-control" name="pass_actual" id="exampleInputPassword1" required="required" placeholder="Cotraseña Actual">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Contraseña Nueva</label>
+                                <input type="password" class="form-control" name="pass_nueva" id="exampleInputEmail1" required="required" placeholder="Contraseña Nueva">
+                            </div>
+                            <button type="submit" class="btn btn-default">Guardar</button>
+                        </form>
+                    </div>
                 </div>
                 <div class="col-md-2">
+
+
 
 
                 </div>
